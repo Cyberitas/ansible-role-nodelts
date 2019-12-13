@@ -1,2 +1,3 @@
 ---
-node_version: 12
+node_version: 10
+yarn_version: 1.21.1

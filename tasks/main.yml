@@ -1,13 +1,18 @@
 ---
 - name: Remove other versions of Node from server
   yum:
-    name: [nodejs]
+    name: ['nodejs']
     state: absent
     update_cache: yes
 
 - name: Remove repo
   file:
     path: /etc/yum.repos.d/nodesource-el7.repo
+    state: absent
+
+- name: Remove temp nodesource.sh file
+  file:
+    path: /tmp/nodesource-setup.sh
     state: absent
 
 - name: Clear yum cache
@@ -32,5 +37,26 @@
 - name: Install nodejs, gcc and make packages
   yum:
     name: ['nodejs', 'gcc-c++', 'make']
-    state: present
+    state: presen
     update_cache: yes
+
+- name: Download Yarn
+  get_url:
+    url: "https://dl.yarnpkg.com/rpm/yarn.repo"
+    dest: /etc/yum.repos.d/yarn.repo
+
+- name: Insall yarn
+  yum:
+    name: yarn
+    state: present
+
+- name: Add alias npm to yarn
+  copy:
+    src: files/yarn.sh
+    dest: /etc/profile.d/yarn.sh
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Initializing changes in /etc/profile
+  shell: source /etc/profile
