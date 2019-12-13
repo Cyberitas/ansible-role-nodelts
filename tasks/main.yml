@@ -18,26 +18,19 @@
 - name: Clear yum cache
   command: "yum clean all"
 
-- name: Check for nodesource repo
-  stat:
-    path: /etc/yum.repos.d/nodesource-el7.repo
-  register: node_stat_result
-
 - name: Download nodesource repo setup
   get_url:
     url: "https://rpm.nodesource.com/setup_{{ node_version }}.x"
     dest: /tmp/nodesource-setup.sh
     mode: '0775'
-  when: node_stat_result.stat.exists == False
 
 - name: Install nodesource repo
   shell: /tmp/nodesource-setup.sh
-  when: node_stat_result.stat.exists == False
 
 - name: Install nodejs, gcc and make packages
   yum:
     name: ['nodejs', 'gcc-c++', 'make']
-    state: presen
+    state: present
     update_cache: yes
 
 - name: Download Yarn
