@@ -60,3 +60,13 @@
 
 - name: Initializing changes in /etc/profile
   shell: source /etc/profile
+
+- name: Create gulp directories
+  file:
+    path: "{{ item.source }}"
+    state: directory
+    owner: "vagrant"
+    group: "vagrant"
+    mode: '0775'
+  loop: "{{ node_modules_dirs }}"
+  when: node_modules_dirs is defined

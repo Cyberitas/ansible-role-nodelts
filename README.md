@@ -1,12 +1,12 @@
 Ansible Role:  
 =========
 
-Ansible role to install Node LTS Version on RHEL/CentOS
+Ansible role to install Node LTS Version & Yarn on RHEL/CentOS
 
 Requirements
 ------------
 
-The following varibales must be set with values in a .yml file in either host_vats or group_vars
+The following variables can be optionally set with values in a .yml file in either host_vats or group_vars
 
 ```
 node_module_dirs
